@@ -3,8 +3,8 @@ applications:
   memory: 256M
   instances: 1
   domain: eu-gb.mybluemix.net
-  name: task4db
-  host: task4db
+  name: ccgi_task4
+  host: ccgi_task4
   disk_quota: 1024M
   services:
   - task4db_david

@@ -21,7 +21,7 @@ var db = 'task4db';
 
 app.get('/',function (req, res) {
     request.get({
-        url: "https://" + me + ":" + password + "@" + host+"/" + db + "/_all_docs?include_docs=true",
+        url: "https://" + me + ":" + password + "@" + host+"/" + db + "/_design/bears/_view/bears",
         headers: {
             'Content-Type': 'application/json'
         }}, function (error, response, body) {
@@ -29,6 +29,7 @@ app.get('/',function (req, res) {
             console.log("ERROR: Can't get target db's docs." +error);
         }else if((response.statusCode < 300)) {
             var d = JSON.parse(body).rows;
+            //res.json(d)
             res.render('home',{bears:d});
         }else {
             console.log("We have no error, but status code is not valid: "+response.statusCode);

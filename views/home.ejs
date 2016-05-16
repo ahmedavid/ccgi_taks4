@@ -11,12 +11,12 @@
                         <% bears.forEach(function(bear){ %>
                             <div class="col-md-6">
                                 <div class="col-md-6">
-                                    <h4><a href="/bear/<%= bear.id %>"><%= bear.doc.name %></a></h4>
-                                    <p><%= bear.doc.description.substr(0,100)+" ..."%></p>
-                                    <a href="/bear/<%= bear.id %>" class="btn btn-success">Read More</a>
+                                    <h4><a href="/bear/<%= bear.value._id %>"><%= bear.value.name %></a></h4>
+                                    <p><%= bear.value.description.substr(0,100)+ ' ...'%></p>
+                                    <a href="/bear/<%= bear.value._id %>" class="btn btn-success">Read More</a>
                                 </div>
                                 <div class="col-md-6">
-                                    <a href="/bear/<%= bear.id %>"><img src="<%= bear.doc.imgUrl %>" class="thumbnail lazy"></a>
+                                    <a href="/bear/<%= bear.value._id %>"><img src="<%= bear.value.imgUrl %>" class="thumbnail lazy"></a>
                                 </div>
                             </div>
                         <%})%>
