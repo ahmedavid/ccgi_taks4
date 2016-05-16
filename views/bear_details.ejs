@@ -1,0 +1,37 @@
+<% include partials/header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <% if(true){ %>
+            <div class="panel panel-primary" ng-init="getBooks()">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Most Terrifying Bears</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row front">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <h4><%= bear.name %></h4>
+                                <p><%= bear.description %></p>
+                                <a href="/" class="btn btn-warning">Back</a> |
+                                <form action="/bear/delete" method="post" style="display: inline">
+                                    <input type="hidden" name="id" value="<%=bear._id%>">
+                                    <input type="hidden" name="rev" value="<%=bear._rev%>">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="<%= bear.imgUrl %>" class="thumbnail lazy">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }else{ %>
+            <h1>404 Not Found!</h1>
+            <% } %>
+        </div>
+    </div>
+</div><!-- /.container -->
+<% include partials/footer %>
