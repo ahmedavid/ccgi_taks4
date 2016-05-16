@@ -104,6 +104,54 @@ app.post('/add',function (req, res) {
     res.redirect('/');
 });
 
+//EDIT AND UPDATE
+app.get('/bear/edit/:id',function (req, res) {
+    var id = req.params.id;
+    request.get({
+            url: "https://" + me + ":" + password + "@" + host+"/" + db + "/"+id,
+            headers: {
+                'Content-Type': 'application/json'
+            }},
+        function (error, response, body) {
+            if ((error) || (!response.statusCode)) {
+                console.log("ERROR: Can't get target db's docs." +error);
+            }else if((response.statusCode < 300)) {
+                var d = JSON.parse(body);
+                res.render('edit',{bear:d});
+            }else {
+                console.log("We have no error, but status code is not valid: "+response.statusCode);
+                res.render('notfound');
+            }
+        });;
+});
+
+app.post('/bear/edit/',function (req, res) {
+    var id= req.body.id;
+    var rev = req.body.rev;
+
+    if(req.body.name && req.body.description && req.body.imgUrl){
+        var bear = {
+            name:req.body.name,
+            description:req.body.description,
+            imgUrl:req.body.imgUrl,
+            create_date:Date.now()
+        }
+    }else{
+        res.redirect('/');
+    }
+
+    var json = JSON.parse(JSON.stringify(bear));
+    request.put({
+            url:"https://" + me + ":" + password + "@" + host+"/" + db+"/"+id+"?rev="+rev, json:json},
+        function(err,httpResponse,body){
+            if (err) {
+                return console.error('upload failed:', err);
+            }
+            console.log('Upload successful!  Server responded with:', body);
+        });
+    res.redirect('/');
+});
+
 app.get('/about',function (req, res) {
     res.render('about');
 });
