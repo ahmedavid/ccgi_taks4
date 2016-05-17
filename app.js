@@ -14,7 +14,7 @@ app.set('view engine','ejs');
 
 
 var me = 'ahmedavid'; // Set this to your own account
-var password = 'Z@ssw0rd123456';
+var password = '123456';
 
 var host = 'ahmedavid.cloudant.com';
 var db = 'task4db';

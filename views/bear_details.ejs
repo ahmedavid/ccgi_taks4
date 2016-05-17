@@ -3,7 +3,7 @@
     <% if(true){ %>
     <div class="panel panel-primary" ng-init="getBooks()">
         <div class="panel-heading">
-            <h3 class="panel-title">Most Terrifying Bears</h3>
+            <h3 class="panel-title"><%= bear.name %></h3>
         </div>
         <div class="panel-body">
             <div class="row">
@@ -11,7 +11,6 @@
                     <img src="<%= bear.imgUrl %>" class="thumbnail lazy">
                 </div>
                 <div class="col-md-6 col-xs-12 col-sm-7">
-                    <h4><%= bear.name %></h4>
                     <p><%= bear.description %></p>
                     <a href="/" class="btn btn-warning">Back</a> |
                     <form action="/bear/delete" method="post" style="display: inline">
