@@ -13,15 +13,12 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine','ejs');
 
 
-var me = 'ahmedavid'; // Set this to your own account
-var password = '123456';
-
-var host = 'ahmedavid.cloudant.com';
+var env = appEnv.services.cloudantNoSQLDB[0].credentials.url;
 var db = 'task4db';
 
 app.get('/',function (req, res) {
     request.get({
-        url: "https://" + me + ":" + password + "@" + host+"/" + db + "/_design/bears/_view/bears",
+        url: env + "/"+db + "/_design/bears/_view/bears",
         headers: {
             'Content-Type': 'application/json'
         }}, function (error, response, body) {
@@ -40,7 +37,7 @@ app.get('/',function (req, res) {
 app.get('/bear/:id',function (req, res) {
     var id = req.params.id;
     request.get({
-        url: "https://" + me + ":" + password + "@" + host+"/" + db + "/"+id,
+        url: env + "/" + db + "/"+id,
         headers: {
             'Content-Type': 'application/json'
         }},
@@ -62,7 +59,7 @@ var rev = '';
 app.post('/bear/delete',function (req, res) {
     var id = req.body.id;    
     var rev = req.body.rev;    
-    var url = "https://" + me + ":" + password + "@" + host+"/" + db + "/"+id+"?rev="+rev;
+    var url = env + "/"+db + "/"+id+"?rev="+rev;
     console.log("URL:"+url);
     request.delete({
         url: url,
@@ -94,7 +91,7 @@ app.post('/add',function (req, res) {
     }
     var json = JSON.parse(JSON.stringify(bear));
     request.post({
-        url:"https://" + me + ":" + password + "@" + host+"/" + db, json:json},
+        url:env + "/" + db, json:json},
         function(err,httpResponse,body){
         if (err) {
             return console.error('upload failed:', err);
@@ -108,7 +105,7 @@ app.post('/add',function (req, res) {
 app.get('/bear/edit/:id',function (req, res) {
     var id = req.params.id;
     request.get({
-            url: "https://" + me + ":" + password + "@" + host+"/" + db + "/"+id,
+            url: env + "/"+db+"/"+id,
             headers: {
                 'Content-Type': 'application/json'
             }},
@@ -142,7 +139,7 @@ app.post('/bear/edit/',function (req, res) {
 
     var json = JSON.parse(JSON.stringify(bear));
     request.put({
-            url:"https://" + me + ":" + password + "@" + host+"/" + db+"/"+id+"?rev="+rev, json:json},
+            url:env + "/"+db +"/"+id+"?rev="+rev, json:json},
         function(err,httpResponse,body){
             if (err) {
                 return console.error('upload failed:', err);
@@ -166,8 +163,3 @@ app.listen(appEnv.port, '0.0.0.0', function() {
   // print a message when the server starts listening
   console.log("server starting on " + appEnv.url);
 });
-
-// app.listen(3000, function() {
-//     // print a message when the server starts listening
-//     console.log("server starting on port http://localhost:3000");
-// });
